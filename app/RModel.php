@@ -1,0 +1,29 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class RModel extends Model
+{
+    protected $primaryKey = "id";
+    public $timestamps = true;
+    public $incrementing = true;
+    protected $fillable = [];
+
+    public function beforeSave(){
+        return true;
+    }
+
+    public function  save(array $options = []){
+        try{
+
+            if(!$this->beforeSave()){
+                return false;
+            }
+            return parent::save($options);
+        }catch (\Exception $e){
+            throw new \Exception($e->getMessage());
+        }
+    }
+}
